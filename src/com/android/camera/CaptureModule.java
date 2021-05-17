@@ -311,7 +311,7 @@ public class CaptureModule extends CameraModule implements
     private final LocationManager mLocationManager;
     /** Plays sounds for countdown timer. */
     private SoundPlayer mSoundPlayer;
-    private final MediaActionSound mMediaActionSound;
+    private MediaActionSound mMediaActionSound;
 
     /** Whether the module is paused right now. */
     private boolean mPaused;
@@ -713,12 +713,18 @@ public class CaptureModule extends CameraModule implements
             guard.mark("initSurfaceTextureConsumer");
         }
 
+        mSoundPlayer.loadSound(R.raw.material_camera_focus);
         mSoundPlayer.loadSound(R.raw.timer_final_second);
         mSoundPlayer.loadSound(R.raw.timer_increment);
 
         guard.mark();
         mHeadingSensor.activate();
-        guard.stop("mHeadingSensor.activate()");
+        guard.mark("mHeadingSensor.activate()");
+
+        if (mMediaActionSound == null) {
+            mMediaActionSound = new MediaActionSound();
+        }
+        guard.stop();
     }
 
     @Override
@@ -736,14 +742,18 @@ public class CaptureModule extends CameraModule implements
         mBurstController.release();
         closeCamera();
         resetTextureBufferSize();
+        mSoundPlayer.unloadSound(R.raw.material_camera_focus);
         mSoundPlayer.unloadSound(R.raw.timer_final_second);
         mSoundPlayer.unloadSound(R.raw.timer_increment);
+        mMediaActionSound.release();
+        mMediaActionSound = null;
     }
 
     @Override
     public void destroy() {
         mSoundPlayer.release();
         mMediaActionSound.release();
+        mMediaActionSound = null;
         mCameraHandler.getLooper().quitSafely();
     }
 

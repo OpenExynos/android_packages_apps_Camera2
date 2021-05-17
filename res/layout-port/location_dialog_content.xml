@@ -18,6 +18,12 @@
               style="@style/start_up_dialog_content"
               android:orientation="vertical"
               android:gravity="center_horizontal">
+    <Button
+        android:id="@+id/confirm_button"
+        style="@style/BlueButton"
+        android:text="@string/startup_dialog_button_next"
+        android:layout_marginBottom="18dp"
+        android:layout_marginTop="18dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,10 +53,5 @@
             android:text="@string/remember_location_prompt" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/confirm_button"
-        style="@style/BlueButton"
-        android:text="@string/startup_dialog_button_next"
-        android:layout_marginBottom="18dp"
-        android:layout_marginTop="18dp" />
+
 </LinearLayout>

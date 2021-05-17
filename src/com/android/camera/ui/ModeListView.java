@@ -707,7 +707,7 @@ public class ModeListView extends FrameLayout
                 mSettingsButton.setLayerType(View.LAYER_TYPE_NONE, null);
             }
 
-            mSettingsButton.setVisibility(VISIBLE);
+            mSettingsButton.setVisibility(INVISIBLE);
             // If successfully finish hiding shimmy, then we should go back to
             // fully hidden state.
             if (success) {

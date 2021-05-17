@@ -1435,6 +1435,7 @@ public class CameraActivity extends QuickActivity
         mMainHandler = new MainHandler(this, getMainLooper());
         mLocationManager = new LocationManager(mAppContext);
         mOrientationManager = new OrientationManagerImpl(this, mMainHandler);
+        // mOrientationManager.lockOrientation();
         mSettingsManager = getServices().getSettingsManager();
         mSoundPlayer = new SoundPlayer(mAppContext);
         mFeatureConfig = OneCameraFeatureConfigCreator.createDefault(getContentResolver(),
@@ -1971,10 +1972,10 @@ public class CameraActivity extends QuickActivity
         // Auto-rotate off
         if (Settings.System.getInt(getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION, 0) == 0) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             mAutoRotateScreen = false;
         } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             mAutoRotateScreen = true;
         }
 
@@ -2193,20 +2194,20 @@ public class CameraActivity extends QuickActivity
         CameraAgentFactory.recycle(CameraAgentFactory.CameraApi.AUTO);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration config) {
-        super.onConfigurationChanged(config);
-        Log.v(TAG, "onConfigurationChanged");
-        if (config.orientation == Configuration.ORIENTATION_UNDEFINED) {
-            return;
-        }
+    // @Override
+    // public void onConfigurationChanged(Configuration config) {
+    //     super.onConfigurationChanged(config);
+    //     Log.v(TAG, "onConfigurationChanged");
+    //     // if (config.orientation == Configuration.ORIENTATION_UNDEFINED) {
+    //     //     return;
+    //     // }
 
-        if (mLastLayoutOrientation != config.orientation) {
-            mLastLayoutOrientation = config.orientation;
-            mCurrentModule.onLayoutOrientationChanged(
-                    mLastLayoutOrientation == Configuration.ORIENTATION_LANDSCAPE);
-        }
-    }
+    //     // if (mLastLayoutOrientation != config.orientation) {
+    //     //     mLastLayoutOrientation = config.orientation;
+    //     //     mCurrentModule.onLayoutOrientationChanged(
+    //     //             mLastLayoutOrientation == Configuration.ORIENTATION_LANDSCAPE);
+    //     // }
+    // }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -2918,7 +2919,7 @@ public class CameraActivity extends QuickActivity
                 mCameraAppUI.getFilmstripBottomControls();
         filmstripBottomPanel.showControls();
         filmstripBottomPanel.setEditButtonVisibility(
-                currentData.getAttributes().canEdit());
+                false);
         filmstripBottomPanel.setShareButtonVisibility(
               currentData.getAttributes().canShare());
         filmstripBottomPanel.setDeleteButtonVisibility(

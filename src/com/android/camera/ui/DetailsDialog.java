@@ -191,7 +191,10 @@ public class DetailsDialog {
                     value = String.format("%s: %s", getDetailsName(
                             context, key), value);
                 }
-                mItems.add(value);
+
+                if(key != MediaDetails.INDEX_EXPOSURE_TIME && key != MediaDetails.INDEX_ISO){
+                    mItems.add(value);
+                }
             }
             if (!resolutionIsValid) {
                 resolveResolution(path);

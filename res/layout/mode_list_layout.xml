@@ -37,5 +37,6 @@
         android:layout_gravity="top|left"
         android:contentDescription="@string/mode_settings"
         android:background="@drawable/settings_gear_background"
+        android:visibility="invisible"
         android:src="@drawable/ic_settings_normal" />
 </com.android.camera.ui.ModeListView>
